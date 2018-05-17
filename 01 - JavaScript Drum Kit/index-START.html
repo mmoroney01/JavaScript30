@@ -59,26 +59,34 @@
 
 <script>
   function playSound(e){
-    //event listens for key press
+    //set audio equal to the audio element that has the same data key as the keyCode of the key pressed, set key equal to the div with a class of key that has the associated keyCode
     const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
     const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
-    if(!audio) return; //stop function if invalid key
-    audio.currentTime=0; //rewind to start
-    audio.play(); //play .wav file
-    key.classList.add('playing'); //add class 'playing' to key to style it
+
+    //if there is no audio then end the function
+    if(!audio) return;
+
+    audio.currentTime = 0; //to play keys repeatedly fast
+
+    //play the .wav file
+    audio.play();
+
+    //add class 'playing' so it will be styled accordingly
+    key.classList.add('playing');
   }
 
+  //to return a key to normal
   function removeTransition(e){
-    if(e.propertyName !== 'transform') return; //skip if not transform
-    this.classList.remove('playing'); //remove class 'playing' go back to normal
+    if(e.propertyName !== 'transform') return;
+    this.classList.remove('playing');
   }
 
-  const keys = document.querySelectorAll('.key'); //all keys get transition enders
+  //all keys will stylistically return to normal after being pressed
+  const keys = document.querySelectorAll('.key');
   keys.forEach(key => key.addEventListener('transitionend', removeTransition));
 
   window.addEventListener('keydown', playSound);
 </script>
-
 
 </body>
 </html>
